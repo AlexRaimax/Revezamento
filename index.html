@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Revezamento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background: #f0f4f8;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #2c3e50;
+    }
+
+    .responsavel {
+      font-size: 2rem;
+      margin: 30px 0;
+      padding: 15px;
+      background: #ffffff;
+      display: inline-block;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .alerta {
+      color: #d35400;
+      font-weight: bold;
+      margin-top: 30px;
+      font-size: 1.2rem;
+      display: none;
+      animation: piscar 1s infinite;
+    }
+
+    @keyframes piscar {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Controle de Revezamento</h1>
+
+  <div class="responsavel" id="responsavelAtual">Alex</div><br/>
+
+  <button onclick="proximoResponsavel()">PRÓXIMO</button>
+
+  <div class="alerta" id="alerta">⚠️ Atenção! Clique em "PRÓXIMO" para atualizar o responsável.</div>
+
+  <script>
+    const lista = ["Alex", "Taina", "Millena", "Hugo/Fernanda", "Honorio", "Ventura"];
+    let indice = 0;
+    let tempoInativo = 0;
+    let alertaAtivo = false;
+
+    function atualizarResponsavel() {
+      document.getElementById("responsavelAtual").textContent = lista[indice];
+      document.getElementById("alerta").style.display = "none";
+      tempoInativo = 0;
+      alertaAtivo = false;
+    }
+
+    function proximoResponsavel() {
+      indice = (indice + 1) % lista.length;
+      atualizarResponsavel();
+    }
+
+    // Verifica inatividade a cada segundo
+    setInterval(() => {
+      tempoInativo += 1;
+      if (tempoInativo >= 60 && !alertaAtivo) {
+        document.getElementById("alerta").style.display = "block";
+        alertaAtivo = true;
+      }
+    }, 1000);
+
+    atualizarResponsavel();
+  </script>
+</body>
+</html>
